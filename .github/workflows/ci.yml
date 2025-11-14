@@ -70,4 +70,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs-dist
-          cname: your-custom-domain.com  # 如果有自定义域名
