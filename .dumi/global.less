@@ -326,14 +326,15 @@ button {
 // 内容区域 - 平铺布局，无卡片效果（参考 Ant Design）
 .dumi-default-content {
   background: transparent !important;
-  padding: 60px 64px !important; // 增大padding，更宽松
+  padding: 60px 64px 60px 64px !important; // 增大padding，右侧留出 TOC 空间
+  padding-right: 280px !important; // 为右侧 TOC 预留空间（220px + 60px margin）
   box-shadow: none !important;
   border-radius: 0 !important;
   margin: 0 !important;
   min-height: calc(100vh - 64px) !important;
 }
 
-// 文章内容区域 - 参考 Ant Design 24 列栅格系统，自动填充剩余空间
+// 文章内容区域 - 自动填充剩余空间，无固定宽度
 .dumi-default-content > article {
   margin: 0 !important; // 左对齐，不居中
   width: 100% !important;
@@ -345,16 +346,16 @@ button {
 // 右侧 TOC 样式 - 参考 Ant Design
 // ============================================
 
-// TOC 容器 - 参考 Ant Design 24 列栅格系统
+// TOC 容器 - 固定在右侧
 .dumi-default-doc-layout-toc-wrapper {
-  position: sticky !important;
+  position: fixed !important; // 改为固定定位
   top: 64px !important;
-  flex: 0 0 auto !important;
+  right: 0 !important; // 固定在右边
   max-height: calc(100vh - 64px - 32px) !important;
   overflow-y: auto !important;
-  padding-left: 16px !important;
-  padding-top: 40px !important;
-  margin-left: 24px !important;
+  padding: 40px 24px 0 16px !important;
+  width: 220px !important; // 固定宽度
+  z-index: 10 !important; // 确保在内容之上
 
   h4 {
     font-size: 12px !important;
@@ -363,30 +364,6 @@ button {
     margin: 0 0 8px 0 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
-  }
-
-  // 默认桌面端：4/24 列 ≈ 16.67%
-  width: 16.67% !important;
-  max-width: 220px !important;
-  min-width: 160px !important;
-
-  // xxl 超大屏 (>= 1600px)：4/24 列 ≈ 16.67%
-  @media (min-width: 1600px) {
-    width: 16.67% !important;
-    margin-left: 48px !important;
-  }
-
-  // xl 大屏 (>= 1200px)：4/24 列 ≈ 16.67%
-  @media (min-width: 1200px) and (max-width: 1599px) {
-    width: 16.67% !important;
-    margin-left: 32px !important;
-  }
-
-  // lg 中屏 (>= 992px)：5/24 列 ≈ 20.83%
-  @media (min-width: 992px) and (max-width: 1199px) {
-    width: 20.83% !important;
-    margin-left: 24px !important;
-    min-width: 140px !important;
   }
 
   // md 平板及以下隐藏 TOC
@@ -739,8 +716,8 @@ pre[class*='language-'] {
 .dumi-default-content {
   // 首页各个板块的间距统一优化
   .markdown {
-    max-width: 1200px !important; // 限制最大宽度
-    margin: 0 auto !important; // 居中显示
+    max-width: none !important; // 移除固定宽度限制
+    margin: 0 !important; // 不居中
     padding: 0 24px !important; // 添加左右内边距，防止内容贴边
 
     h2 {
@@ -1271,7 +1248,7 @@ pre[class*='language-'] {
 
   // 内容区域
   .dumi-default-content {
-    padding: 32px 20px !important; // 增大padding
+    padding: 32px 20px !important; // 移动端不需要右侧 padding，TOC 已隐藏
     margin: 0 !important;
 
     .markdown {
@@ -1360,7 +1337,7 @@ pre[class*='language-'] {
   }
 
   .dumi-default-content {
-    padding: 40px 32px !important;
+    padding: 40px 280px 40px 32px !important; // 平板端也需要为 TOC 预留空间
     margin: 0 !important;
 
     .markdown {
@@ -1374,12 +1351,6 @@ pre[class*='language-'] {
   // 文章内容区域
   .dumi-default-content > article {
     max-width: 100% !important;
-  }
-
-  // 右侧 TOC 调整宽度
-  .dumi-default-doc-layout-toc-wrapper {
-    width: 150px !important;
-    margin-left: 20px !important;
   }
 }
 
@@ -1396,7 +1367,7 @@ pre[class*='language-'] {
   }
 
   .dumi-default-content {
-    padding: 80px 120px !important;
+    padding: 80px 280px 80px 120px !important; // 大屏也需要为 TOC 预留空间
 
     .markdown {
       h2 {
