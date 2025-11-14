@@ -642,10 +642,10 @@ pre[class*='language-'] {
 }
 
 .dumi-default-features {
-  padding: 4% 4% !important; // 使用百分比自适应
-  max-width: min(100%, 1400px) !important; // 设置合理的最大宽度，保持自适应
+  padding: 4% 0 !important; // 移除左右 padding，由宽度控制
+  max-width: 80% !important; // 设置为 80% 宽度
   margin: 0 auto !important; // 居中显示
-  width: 100% !important;
+  width: 80% !important;
   box-sizing: border-box !important;
 
   // 特性卡片网格布局 - 固定3列，更宽敞
@@ -715,9 +715,11 @@ pre[class*='language-'] {
 .dumi-default-content {
   // 首页各个板块的间距统一优化
   .markdown {
-    max-width: min(100%, 1200px) !important; // 设置合理的最大宽度，保持自适应
+    max-width: 80% !important; // 设置为 80% 宽度
+    width: 80% !important; // 设置为 80% 宽度
     margin: 0 auto !important; // 居中显示
-    padding: 0 4% !important; // 使用百分比自适应，防止内容贴边
+    padding: 0 !important; // 移除 padding，由宽度控制
+    text-align: center !important; // 文本居中
 
     h2 {
       font-size: 32px !important; // 增大标题字号
@@ -750,13 +752,16 @@ pre[class*='language-'] {
       line-height: 1.8 !important;
       color: rgba(0, 0, 0, 0.65) !important;
       margin-bottom: 16px !important;
+      text-align: center !important; // 段落文本居中
     }
 
     // 列表项样式优化
     ul,
     ol {
-      margin: 20px 0 28px 0 !important; // 增大间距
-      padding-left: 24px !important;
+      margin: 20px auto 28px auto !important; // 增大间距，居中显示
+      padding-left: 0 !important; // 移除左侧 padding
+      list-style-position: inside !important; // 列表标记在内部
+      text-align: center !important; // 列表居中
 
       li {
         font-size: 14px !important;
@@ -1208,7 +1213,9 @@ pre[class*='language-'] {
 
   // 特性卡片（移动端已在主样式中处理）
   .dumi-default-features {
-    padding: 4% 3% !important; // 使用百分比自适应
+    width: 80% !important; // 移动端也保持 80% 宽度
+    max-width: 80% !important;
+    padding: 4% 0 !important; // 移除左右 padding
     gap: 12px !important;
 
     .dumi-default-features-item {
@@ -1331,7 +1338,9 @@ pre[class*='language-'] {
 
   // 特性卡片（平板端已在主样式中处理）
   .dumi-default-features {
-    padding: 4% 4% !important; // 使用百分比自适应
+    width: 80% !important; // 平板端也保持 80% 宽度
+    max-width: 80% !important;
+    padding: 4% 0 !important; // 移除左右 padding
     gap: 20px !important;
   }
 
