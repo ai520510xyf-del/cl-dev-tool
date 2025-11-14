@@ -3,8 +3,8 @@ import { version } from './package.json';
 
 export default defineConfig({
   outputPath: 'docs-dist',
-  base: process.env.NODE_ENV === 'production' ? '/anker-dev-tool/' : '/',
-  publicPath: process.env.NODE_ENV === 'production' ? '/anker-dev-tool/' : '/',
+  base: '/anker-dev-tool/',
+  publicPath: '/anker-dev-tool/',
   favicons: [
     'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   ],
