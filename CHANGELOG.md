@@ -95,6 +95,6 @@ npm install anker-dev-tool@0.1.0
 
 ## 相关链接
 
-- [GitHub Releases](https://github.com/anker/anker-dev-tool/releases)
+- [GitHub Releases](https://github.com/ai520510xyf-del/anker-dev-tool/releases)
 - [npm Package](https://www.npmjs.com/package/anker-dev-tool)
-- [文档网站](https://anker.github.io/anker-dev-tool)
+- [文档网站](https://ai520510xyf-del.github.io/anker-dev-tool)
