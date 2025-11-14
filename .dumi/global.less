@@ -330,12 +330,12 @@ button {
   box-shadow: none !important;
   border-radius: 0 !important;
   margin: 0 !important;
-  min-height: calc(100vh - 64px) !important;
 }
 
 // 文章内容区域 - 自动填充剩余空间，无固定宽度
+// 默认靠左显示（指南和组件页面）
 .dumi-default-content > article {
-  margin: 0 !important; // 左对齐，不居中
+  margin: 0 !important; // 靠左显示
   width: 100% !important;
   flex: 1 1 auto !important; // 自动填充中间剩余空间
   max-width: none !important; // 移除最大宽度限制，让内容自然填充
@@ -444,6 +444,8 @@ button {
     overflow-x: auto !important;
     font-size: 13px !important;
     line-height: 1.8 !important;
+    text-align: left !important; // 代码块左对齐
+    direction: ltr !important; // 确保从左到右阅读
 
     code {
       background: transparent !important;
@@ -451,6 +453,7 @@ button {
       padding: 0 !important;
       color: rgba(0, 0, 0, 0.85) !important;
       font-family: var(--anker-code-font-family) !important;
+      text-align: left !important; // 代码内容左对齐
     }
   }
 
@@ -554,6 +557,8 @@ pre[class*='language-'] {
   border-radius: 0 !important;
   margin: 0 !important;
   padding: 16px 20px !important;
+  text-align: left !important; // 代码块左对齐
+  direction: ltr !important; // 确保从左到右阅读
   background: #f7f8fa !important; // 使用柔和的浅灰背景
   font-size: 13px !important;
   line-height: 1.8 !important;
@@ -563,6 +568,10 @@ pre[class*='language-'] {
 // Hero 区域样式优化 - 参考 Ant Design
 // ============================================
 .dumi-default-hero {
+  margin: 24px auto 0 auto !important; // 设置上边距并居中显示
+  max-width: 80% !important; // 使用百分比宽度，不写死
+  width: 80% !important; // 使用百分比宽度
+  height: 650px !important; // 设置固定高度
   padding: 3% 4% !important; // 使用百分比自适应
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
 
@@ -580,7 +589,7 @@ pre[class*='language-'] {
     font-size: 18px !important;
     line-height: 1.6 !important;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2) !important;
-    max-width: 800px !important;
+    max-width: 80% !important; // 使用百分比自适应，移除固定宽度
     margin: 0 auto !important;
   }
 
@@ -643,9 +652,8 @@ pre[class*='language-'] {
 
 .dumi-default-features {
   padding: 4% 0 !important; // 移除左右 padding，由宽度控制
-  max-width: 80% !important; // 设置为 80% 宽度
   margin: 0 auto !important; // 居中显示
-  width: 80% !important;
+  width: calc(80% - 40px) !important; // 使用 calc 计算宽度
   box-sizing: border-box !important;
 
   // 特性卡片网格布局 - 固定3列，更宽敞
@@ -696,6 +704,7 @@ pre[class*='language-'] {
       margin: 12px 0 12px 0 !important; // 增加下间距
       color: rgba(0, 0, 0, 0.85) !important;
       line-height: 1.5 !important;
+      text-align: left !important; // 卡片标题左对齐
     }
 
     p {
@@ -704,6 +713,7 @@ pre[class*='language-'] {
       line-height: 1.8 !important;
       margin: 0 !important;
       flex: 1 !important;
+      text-align: left !important; // 卡片描述左对齐
     }
   }
 }
@@ -711,15 +721,17 @@ pre[class*='language-'] {
 // ============================================
 // 首页内容板块样式优化 - 参考 Ant Design
 // ============================================
-// 首页主内容区域
+// 首页主内容区域 - 只针对首页（使用类名 dumi-home-content）
+// 确保首页左右 padding 一致，不影响其他页面
+.dumi-home-content {
+  padding: 0 3% 3% 3% !important; // 首页 padding-top 为 0，左右 padding 一致（3%），不影响组件页面和指南页面
+}
+
 .dumi-default-content {
   // 首页各个板块的间距统一优化
   .markdown {
-    max-width: 80% !important; // 设置为 80% 宽度
-    width: 80% !important; // 设置为 80% 宽度
-    margin: 0 auto !important; // 居中显示
-    padding: 0 !important; // 移除 padding，由宽度控制
-    text-align: center !important; // 文本居中
+    padding: 0 3% !important; // 添加内部 padding，防止内容贴边
+    text-align: left !important; // 默认左对齐，提升可读性
 
     h2 {
       font-size: 32px !important; // 增大标题字号
@@ -752,16 +764,16 @@ pre[class*='language-'] {
       line-height: 1.8 !important;
       color: rgba(0, 0, 0, 0.65) !important;
       margin-bottom: 16px !important;
-      text-align: center !important; // 段落文本居中
+      text-align: left !important; // 段落文本左对齐，提升可读性
     }
 
     // 列表项样式优化
     ul,
     ol {
-      margin: 20px auto 28px auto !important; // 增大间距，居中显示
-      padding-left: 0 !important; // 移除左侧 padding
-      list-style-position: inside !important; // 列表标记在内部
-      text-align: center !important; // 列表居中
+      margin: 20px 0 28px 0 !important; // 增大间距，左对齐
+      padding-left: 24px !important; // 恢复左侧 padding
+      list-style-position: outside !important; // 列表标记在外部
+      text-align: left !important; // 列表左对齐
 
       li {
         font-size: 14px !important;
@@ -769,6 +781,7 @@ pre[class*='language-'] {
         color: rgba(0, 0, 0, 0.65) !important;
         margin-bottom: 8px !important;
         padding-left: 8px !important;
+        text-align: left !important; // 列表项左对齐
 
         // 带 emoji 的列表项（如 ✅）
         &::marker {
@@ -815,16 +828,11 @@ pre[class*='language-'] {
     background: #fafafa !important;
     font-weight: 600 !important; // 加粗表头
     color: rgba(0, 0, 0, 0.85) !important;
-    text-align: left !important;
+    text-align: left !important; // 表头左对齐
     padding: 14px 16px !important; // 稍微减小高度
     border-bottom: 2px solid #e8e8e8 !important; // 加粗表头底部边框
     white-space: nowrap !important;
     font-size: 14px !important;
-
-    // 表头居中对齐（浏览器支持表格）
-    &:not(:first-child) {
-      text-align: center !important;
-    }
   }
 
   td {
@@ -833,17 +841,13 @@ pre[class*='language-'] {
     border-bottom: 1px solid #f0f0f0 !important;
     line-height: 1.6 !important;
     vertical-align: middle !important; // 垂直居中
+    text-align: left !important; // 表格内容左对齐
 
     // 图片居中对齐（浏览器图标）
     img {
       display: block !important;
       margin: 0 auto !important;
       vertical-align: middle !important;
-    }
-
-    // 浏览器支持表格的单元格居中
-    &:not(:first-child) {
-      text-align: center !important;
     }
   }
 
@@ -1213,8 +1217,7 @@ pre[class*='language-'] {
 
   // 特性卡片（移动端已在主样式中处理）
   .dumi-default-features {
-    width: 80% !important; // 移动端也保持 80% 宽度
-    max-width: 80% !important;
+    width: calc(80% - 40px) !important; // 使用 calc 计算宽度
     padding: 4% 0 !important; // 移除左右 padding
     gap: 12px !important;
 
@@ -1256,6 +1259,11 @@ pre[class*='language-'] {
   .dumi-default-content {
     padding: 2% 2% !important; // 移动端使用百分比自适应，TOC 已隐藏
     margin: 0 !important;
+  }
+
+  // 首页在移动端也保持左右 padding 一致
+  .dumi-home-content {
+    padding: 0 2% 2% 2% !important; // 移动端首页 padding-top 为 0，左右 padding 一致
 
     .markdown {
       h2 {
@@ -1338,8 +1346,7 @@ pre[class*='language-'] {
 
   // 特性卡片（平板端已在主样式中处理）
   .dumi-default-features {
-    width: 80% !important; // 平板端也保持 80% 宽度
-    max-width: 80% !important;
+    width: calc(80% - 40px) !important; // 使用 calc 计算宽度
     padding: 4% 0 !important; // 移除左右 padding
     gap: 20px !important;
   }
@@ -1347,6 +1354,11 @@ pre[class*='language-'] {
   .dumi-default-content {
     padding: 2.5% 12% 2.5% 2% !important; // 平板端使用百分比自适应，为 TOC 预留空间
     margin: 0 !important;
+  }
+
+  // 首页在平板端也保持左右 padding 一致
+  .dumi-home-content {
+    padding: 0 2.5% 2.5% 2.5% !important; // 平板端首页 padding-top 为 0，左右 padding 一致
 
     .markdown {
       h2 {
@@ -1369,14 +1381,18 @@ pre[class*='language-'] {
   }
 
   .dumi-default-features {
-    max-width: 80% !important; // 大屏也保持 80% 宽度
-    width: 80% !important; // 大屏也保持 80% 宽度
-    padding: 4% 0 !important; // 移除左右 padding
+    width: calc(80% - 40px) !important; // 使用 calc 计算宽度
+    padding: 0 !important; // 移除左右 padding
     gap: 30px !important; // 大屏增大间距
   }
 
   .dumi-default-content {
     padding: 4% 17% 4% 3% !important; // 大屏使用百分比自适应，为 TOC 预留空间
+  }
+
+  // 首页在大屏也保持左右 padding 一致
+  .dumi-home-content {
+    padding: 0 4% 4% 4% !important; // 大屏首页 padding-top 为 0，左右 padding 一致
 
     .markdown {
       h2 {

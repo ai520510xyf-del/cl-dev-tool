@@ -80,4 +80,47 @@ export default defineConfig({
   // srcTranspiler: 'babel', // 注释掉，使用默认的 swc
   codeSplitting: false,
   styles: ['.dumi/global.less'],
+  headScripts: [
+    `
+    (function() {
+      const addHomePageClass = () => {
+        const contentElement = document.querySelector('.dumi-default-content');
+        const heroElement = document.querySelector('.dumi-default-hero');
+        if (contentElement && heroElement) {
+          contentElement.classList.add('dumi-home-content');
+        } else if (contentElement) {
+          contentElement.classList.remove('dumi-home-content');
+        }
+      };
+      addHomePageClass();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', addHomePageClass);
+      }
+      const observer = new MutationObserver(() => {
+        addHomePageClass();
+      });
+      if (document.body) {
+        observer.observe(document.body, { childList: true, subtree: true });
+      } else {
+        document.addEventListener('DOMContentLoaded', () => {
+          observer.observe(document.body, { childList: true, subtree: true });
+        });
+      }
+      if (window.history && window.history.pushState) {
+        const originalPushState = window.history.pushState;
+        window.history.pushState = function(...args) {
+          originalPushState.apply(window.history, args);
+          setTimeout(addHomePageClass, 200);
+        };
+        window.addEventListener('popstate', () => {
+          setTimeout(addHomePageClass, 200);
+        });
+      }
+      window.addEventListener('hashchange', () => {
+        setTimeout(addHomePageClass, 200);
+      });
+      setInterval(addHomePageClass, 1000);
+    })();
+    `,
+  ],
 });
