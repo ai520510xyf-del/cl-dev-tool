@@ -83,18 +83,6 @@ jobs:
           echo "使用 npm install 可以确保所有依赖（包括可选依赖）被正确安装"
           npm install
 
-      - name: Build package (required for docs)
-        run: |
-          echo "构建包以支持文档中的导入..."
-          npm run build
-
-      - name: Create package tarball and install
-        run: |
-          echo "创建包 tarball..."
-          npm pack
-          echo "安装本地包..."
-          npm install ./cl-dev-tool-*.tgz --save-dev || echo "安装失败，但继续..."
-
       - name: Check files
         run: |
           echo "检查示例文件..."
