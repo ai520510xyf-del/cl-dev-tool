@@ -29,8 +29,11 @@ jobs:
         run: |
           echo "安装依赖..."
           npm ci
-          echo "安装可选依赖（npm ci 不会安装可选依赖，这是 npm 的已知问题）..."
-          npm install --no-save --no-package-lock || npm install --no-save
+          echo "修复可选依赖问题（npm ci 的已知 bug）..."
+          echo "重新安装 @swc/core 以确保 native binding 被正确安装..."
+          npm rebuild @swc/core || npm install @swc/core --no-save
+          echo "安装其他可选依赖..."
+          npm install --no-save --no-package-lock 2>/dev/null || true
 
       - name: Run ESLint
         run: npm run lint
@@ -80,8 +83,11 @@ jobs:
         run: |
           echo "安装依赖..."
           npm ci
-          echo "安装可选依赖（npm ci 不会安装可选依赖，这是 npm 的已知问题）..."
-          npm install --no-save --no-package-lock || npm install --no-save
+          echo "修复可选依赖问题（npm ci 的已知 bug）..."
+          echo "重新安装 @swc/core 以确保 native binding 被正确安装..."
+          npm rebuild @swc/core || npm install @swc/core --no-save
+          echo "安装其他可选依赖..."
+          npm install --no-save --no-package-lock 2>/dev/null || true
 
       - name: Build package (required for docs)
         run: |
