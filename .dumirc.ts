@@ -1,5 +1,6 @@
 import { defineConfig } from 'dumi';
 import { version } from './package.json';
+import path from 'path';
 
 export default defineConfig({
   outputPath: 'docs-dist',
@@ -75,8 +76,8 @@ export default defineConfig({
     entryFile: './src/index.ts',
   },
   alias: {
-    '@': require('path').resolve(__dirname, 'src'),
-    'cl-dev-tool': require('path').resolve(__dirname, 'src'),
+    '@': path.resolve(__dirname, 'src'),
+    'cl-dev-tool': path.resolve(__dirname, 'src'),
   },
   lessLoader: {
     javascriptEnabled: true,
