@@ -23,7 +23,7 @@
 
 ```bash
 git clone https://github.com/ai520510xyf-del/cl-dev-tool.git
-cd anker-dev-tool
+cd cl-dev-tool
 ```
 
 ### 安装依赖
@@ -214,7 +214,7 @@ Bug 报告应包含：
 - 环境信息
   - 浏览器及版本
   - Node.js 版本
-  - anker-dev-tool 版本
+  - cl-dev-tool 版本
   - React 版本
 
 ## 💡 功能建议
@@ -240,7 +240,7 @@ Bug 报告应包含：
 
 如果你在贡献过程中遇到问题，可以：
 
-- 查看[文档](https://anker.github.io/anker-dev-tool)
+- 查看[文档](https://ai520510xyf-del.github.io/cl-dev-tool)
 - 在 [GitHub Discussions](https://github.com/ai520510xyf-del/cl-dev-tool/discussions) 提问
 - 发送邮件到 anker@example.com
 

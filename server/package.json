@@ -1,5 +1,5 @@
 {
-  "name": "@anker-dev-tool/server",
+  "name": "@cl-dev-tool/server",
   "version": "1.0.0",
   "description": "Anker Dev Tool Backend API Server",
   "main": "dist/index.js",

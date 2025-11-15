@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
       approval: 'GET /api/approval/:instanceId',
     },
     documentation: {
-      frontend: 'http://localhost:5173',
+      frontend: 'https://ai520510xyf-del.github.io/cl-dev-tool',
       example: 'GET /api/approval/YOUR_INSTANCE_CODE',
       headers: {
         'x-system-name': 'demo',

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 // 从发布的 npm 包导入组件（样式已自动导入，无需手动导入）
-// import { ApprovalDetailButton } from 'anker-dev-tool';
+// import { ApprovalDetailButton } from 'cl-dev-tool';
 import ApprovalDetailButton from '../components/ApprovalDetailButton';
 import './index.less';
 

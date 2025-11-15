@@ -119,7 +119,7 @@ const App = () => {
 ```bash
 # 克隆项目
 git clone https://github.com/ai520510xyf-del/cl-dev-tool.git
-cd anker-dev-tool
+cd cl-dev-tool
 
 # 安装依赖
 npm install
@@ -144,7 +144,7 @@ npm run build
 ### 项目结构
 
 ```
-anker-dev-tool/
+cl-dev-tool/
 ├── src/                    # 源代码
 │   ├── components/         # 组件目录
 │   │   └── ApprovalDetailButton/
