@@ -73,12 +73,11 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: Fix optional dependencies (Rollup)
         run: |
-          echo "修复 Rollup 可选依赖问题..."
-          npm install @rollup/rollup-linux-x64-gnu --save-optional || echo "安装可选依赖失败，但继续..."
+          echo "安装依赖..."
+          npm ci
+          echo "修复 Rollup 可选依赖问题（npm 的已知 bug）..."
+          npm install @rollup/rollup-linux-x64-gnu --save-optional || npm install
 
       - name: Build package (required for docs)
         run: |
