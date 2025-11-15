@@ -75,12 +75,26 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build package (required for docs)
+        run: |
+          echo "构建包以支持文档中的导入..."
+          npm run build
+
+      - name: Create package tarball and install
+        run: |
+          echo "创建包 tarball..."
+          npm pack
+          echo "安装本地包..."
+          npm install ./cl-dev-tool-*.tgz --save-dev || echo "安装失败，但继续..."
+
       - name: Check files
         run: |
           echo "检查示例文件..."
           ls -la docs/demos/ApprovalDetailButton/ || echo "示例目录不存在"
           echo "检查配置文件..."
           test -f .dumirc.ts && echo ".dumirc.ts 存在" || echo ".dumirc.ts 不存在"
+          echo "检查构建产物..."
+          ls -la dist/ || echo "dist 目录不存在"
 
       - name: Build docs
         run: npm run docs:build
