@@ -27,13 +27,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          echo "安装依赖..."
-          npm ci
-          echo "修复可选依赖问题（npm ci 的已知 bug）..."
-          echo "重新安装 @swc/core 以确保 native binding 被正确安装..."
-          npm rebuild @swc/core || npm install @swc/core --no-save
-          echo "安装其他可选依赖..."
-          npm install --no-save --no-package-lock 2>/dev/null || true
+          echo "安装依赖（使用 npm install 以确保可选依赖被正确安装）..."
+          echo "注意：npm ci 不会安装可选依赖，这是 npm 的已知问题"
+          echo "使用 npm install 可以确保所有依赖（包括可选依赖）被正确安装"
+          npm install
 
       - name: Run ESLint
         run: npm run lint
@@ -81,13 +78,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          echo "安装依赖..."
-          npm ci
-          echo "修复可选依赖问题（npm ci 的已知 bug）..."
-          echo "重新安装 @swc/core 以确保 native binding 被正确安装..."
-          npm rebuild @swc/core || npm install @swc/core --no-save
-          echo "安装其他可选依赖..."
-          npm install --no-save --no-package-lock 2>/dev/null || true
+          echo "安装依赖（使用 npm install 以确保可选依赖被正确安装）..."
+          echo "注意：npm ci 不会安装可选依赖，这是 npm 的已知问题"
+          echo "使用 npm install 可以确保所有依赖（包括可选依赖）被正确安装"
+          npm install
 
       - name: Build package (required for docs)
         run: |
