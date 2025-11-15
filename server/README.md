@@ -131,15 +131,15 @@ npm test
 ### Docker（推荐）
 
 ```bash
-docker build -t anker-dev-tool-server .
-docker run -p 3000:3000 --env-file .env anker-dev-tool-server
+docker build -t cl-dev-tool-server .
+docker run -p 3000:3000 --env-file .env cl-dev-tool-server
 ```
 
 ### PM2
 
 ```bash
 npm run build
-pm2 start dist/index.js --name anker-dev-tool-server
+pm2 start dist/index.js --name cl-dev-tool-server
 ```
 
 ## 许可证

@@ -47,8 +47,8 @@
 
 ```bash
 cd server
-docker build -t anker-dev-tool-server .
-docker run -p 3000:3000 --env-file .env anker-dev-tool-server
+docker build -t cl-dev-tool-server .
+docker run -p 3000:3000 --env-file .env cl-dev-tool-server
 ```
 
 #### 推送到 Docker Registry
@@ -58,8 +58,8 @@ docker run -p 3000:3000 --env-file .env anker-dev-tool-server
 docker login
 
 # 构建和推送
-docker build -t your-registry/anker-dev-tool-server:latest ./server
-docker push your-registry/anker-dev-tool-server:latest
+docker build -t your-registry/cl-dev-tool-server:latest ./server
+docker push your-registry/cl-dev-tool-server:latest
 ```
 
 ### 方式 3: 部署到自己的服务器
@@ -68,7 +68,7 @@ docker push your-registry/anker-dev-tool-server:latest
 
 ```bash
 # 在服务器上
-cd /opt/anker-dev-tool-server
+cd /opt/cl-dev-tool-server
 git clone https://github.com/ai520510xyf-del/cl-dev-tool.git .
 cd server
 npm install
@@ -87,7 +87,7 @@ pm2 startup
 
 #### 使用 systemd
 
-创建 `/etc/systemd/system/anker-dev-tool-server.service`:
+创建 `/etc/systemd/system/cl-dev-tool-server.service`:
 
 ```ini
 [Unit]
@@ -97,7 +97,7 @@ After=network.target
 [Service]
 Type=simple
 User=your-user
-WorkingDirectory=/opt/anker-dev-tool-server/server
+WorkingDirectory=/opt/cl-dev-tool-server/server
 ExecStart=/usr/bin/node dist/index.js
 Restart=always
 Environment=NODE_ENV=production
@@ -110,8 +110,8 @@ WantedBy=multi-user.target
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable anker-dev-tool-server
-sudo systemctl start anker-dev-tool-server
+sudo systemctl enable cl-dev-tool-server
+sudo systemctl start cl-dev-tool-server
 ```
 
 ## 环境变量配置
@@ -179,7 +179,7 @@ curl http://your-server:3000/
 
 ```bash
 pm2 status
-pm2 logs anker-dev-tool-server
+pm2 logs cl-dev-tool-server
 pm2 monit
 ```
 
