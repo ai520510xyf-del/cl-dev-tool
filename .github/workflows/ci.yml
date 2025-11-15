@@ -74,10 +74,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          echo "安装依赖..."
-          npm ci
-          echo "修复 Rollup 可选依赖问题（npm 的已知 bug）..."
-          npm install @rollup/rollup-linux-x64-gnu --save-optional || npm install
+          echo "清理缓存和 node_modules..."
+          rm -rf node_modules package-lock.json
+          echo "重新安装依赖（使用 npm install 以确保可选依赖被安装）..."
+          npm install
 
       - name: Build package (required for docs)
         run: |
