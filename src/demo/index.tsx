@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <ConfigProvider locale={zhCN}>
       <div style={{ padding: '50px' }}>
-        <h1>Anker Dev Tool - 组件预览</h1>
+        <h1>CL Dev Tool - 组件预览</h1>
 
         {/* ApprovalDetailButton 示例 */}
         <section style={{ marginTop: '40px' }}>

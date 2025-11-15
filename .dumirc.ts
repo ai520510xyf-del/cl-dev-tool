@@ -10,7 +10,7 @@ export default defineConfig({
     'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   ],
   themeConfig: {
-    name: 'Anker Dev Tool',
+    name: 'CL Dev Tool',
     logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
     nav: [
       { title: '指南', link: '/guide' },

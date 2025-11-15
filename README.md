@@ -1,4 +1,4 @@
-# Anker Dev Tool
+# CL Dev Tool
 
 <div align="center">
 
@@ -221,12 +221,12 @@ npm run test:coverage    # 测试覆盖率
 
 ## 📄 许可证
 
-[MIT](./LICENSE) © Anker
+[MIT](./LICENSE) © CL Dev Tool
 
 ---
 
 <div align="center">
 
-Made with ❤️ by Anker
+Made with ❤️ by CL Dev Tool Team
 
 </div>

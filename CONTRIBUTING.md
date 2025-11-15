@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢你考虑为 Anker Dev Tool 做出贡献！
+感谢你考虑为 CL Dev Tool 做出贡献！
 
 ## 🎯 贡献方式
 
@@ -242,6 +242,6 @@ Bug 报告应包含：
 
 - 查看[文档](https://ai520510xyf-del.github.io/cl-dev-tool)
 - 在 [GitHub Discussions](https://github.com/ai520510xyf-del/cl-dev-tool/discussions) 提问
-- 发送邮件到 anker@example.com
+- 发送邮件到 cl-dev-tool@example.com
 
 再次感谢你的贡献！🎉

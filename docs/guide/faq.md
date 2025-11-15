@@ -4,13 +4,13 @@ toc: content
 
 # 常见问题
 
-这里列出了使用 Anker Dev Tool 时的常见问题和解决方案。
+这里列出了使用 CL Dev Tool 时的常见问题和解决方案。
 
 ## 📦 安装相关
 
 ### 安装时出现 peer dependencies 警告？
 
-这是正常的提示。Anker Dev Tool 依赖 React、Ant Design 和 Axios，如果你的项目还没有安装这些依赖，请先安装：
+这是正常的提示。CL Dev Tool 依赖 React、Ant Design 和 Axios，如果你的项目还没有安装这些依赖，请先安装：
 
 ```bash
 npm install react react-dom antd axios
@@ -192,7 +192,7 @@ import 'regenerator-runtime/runtime';
 
 ### 在 React 16 中可以使用吗？
 
-可以，Anker Dev Tool 支持 React >= 16.8.0。
+可以，CL Dev Tool 支持 React >= 16.8.0。
 
 ## 📱 移动端相关
 

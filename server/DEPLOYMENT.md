@@ -91,7 +91,7 @@ pm2 startup
 
 ```ini
 [Unit]
-Description=Anker Dev Tool Server
+Description=CL Dev Tool Server
 After=network.target
 
 [Service]

@@ -68,7 +68,7 @@ export default {
 
 ```markdown
 <p align="center">
-  <img src="./public/logo.svg" width="200" alt="Anker Dev Tool Logo" />
+  <img src="./public/logo.svg" width="200" alt="CL Dev Tool Logo" />
 </p>
 ```
 

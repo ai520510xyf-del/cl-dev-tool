@@ -4,7 +4,7 @@ toc: content
 
 # 浏览器兼容性
 
-Anker Dev Tool 支持所有现代浏览器和 IE 11（需要 polyfills）。
+CL Dev Tool 支持所有现代浏览器和 IE 11（需要 polyfills）。
 
 ## 🌐 支持的浏览器
 

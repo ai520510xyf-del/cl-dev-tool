@@ -4,7 +4,7 @@ toc: content
 
 # 快速开始
 
-本文档将帮助你快速上手 Anker Dev Tool，从安装到使用，让你在几分钟内集成业务组件到你的项目中。
+本文档将帮助你快速上手 CL Dev Tool，从安装到使用，让你在几分钟内集成业务组件到你的项目中。
 
 ## 📦 安装
 
@@ -69,7 +69,7 @@ export default App;
 
 ### 按需引入（推荐）
 
-Anker Dev Tool 默认支持基于 ES modules 的 tree shaking，直接引入即可实现按需加载：
+CL Dev Tool 默认支持基于 ES modules 的 tree shaking，直接引入即可实现按需加载：
 
 ```ts
 // 只引入你需要的组件
@@ -124,7 +124,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
 
 ## 🔧 在 TypeScript 中使用
 
-Anker Dev Tool 使用 TypeScript 编写，提供完整的类型定义，无需额外安装 `@types` 包。
+CL Dev Tool 使用 TypeScript 编写，提供完整的类型定义，无需额外安装 `@types` 包。
 
 ### 导入类型定义
 

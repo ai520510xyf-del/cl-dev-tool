@@ -1,7 +1,7 @@
 {
   "name": "@cl-dev-tool/server",
   "version": "1.0.0",
-  "description": "Anker Dev Tool Backend API Server",
+  "description": "CL Dev Tool Backend API Server",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -17,7 +17,7 @@
     "express",
     "approval"
   ],
-  "author": "anker",
+  "author": "CL Dev Tool Team",
   "license": "MIT",
   "dependencies": {
     "@types/cors": "^2.8.19",

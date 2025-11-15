@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
       build: {
         lib: {
           entry: resolve(__dirname, 'src/index.ts'),
-          name: 'AnkerDevTool',
+          name: 'CLDevTool',
           formats: ['es', 'cjs'],
           fileName: format => `index.${format === 'es' ? 'esm' : format}.js`,
         },

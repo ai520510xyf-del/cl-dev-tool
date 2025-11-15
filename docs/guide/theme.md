@@ -4,7 +4,7 @@ toc: content
 
 # 主题定制
 
-Anker Dev Tool 基于 Ant Design 5.x 构建，完全支持 Ant Design 的主题定制系统。
+CL Dev Tool 基于 Ant Design 5.x 构建，完全支持 Ant Design 的主题定制系统。
 
 ## 🎨 使用 ConfigProvider
 
