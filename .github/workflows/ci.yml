@@ -75,8 +75,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check files
+        run: |
+          echo "检查示例文件..."
+          ls -la docs/demos/ApprovalDetailButton/ || echo "示例目录不存在"
+          echo "检查配置文件..."
+          test -f .dumirc.ts && echo ".dumirc.ts 存在" || echo ".dumirc.ts 不存在"
+
       - name: Build docs
         run: npm run docs:build
+        continue-on-error: false
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
