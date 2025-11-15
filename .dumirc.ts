@@ -54,7 +54,7 @@ export default defineConfig({
       ],
     },
     socialLinks: {
-      github: 'https://github.com/ai520510xyf-del/anker-dev-tool',
+      github: 'https://github.com/ai520510xyf-del/cl-dev-tool',
     },
     footer: `Copyright © ${new Date().getFullYear()} | Powered by <a href="https://d.umijs.org" target="_blank">dumi</a>`,
     prefersColor: {
