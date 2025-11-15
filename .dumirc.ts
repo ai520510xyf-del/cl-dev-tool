@@ -38,6 +38,10 @@ export default defineConfig({
           children: [
             { title: '主题定制', link: '/guide/theme' },
             { title: '浏览器兼容性', link: '/guide/compatibility' },
+            {
+              title: '为什么后端不能使用 GitHub Pages？',
+              link: '/guide/why-backend-cannot-use-github-pages',
+            },
           ],
         },
       ],
