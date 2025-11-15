@@ -74,10 +74,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          echo "清理缓存和 node_modules..."
-          rm -rf node_modules package-lock.json
-          echo "重新安装依赖（使用 npm install 以确保可选依赖被安装）..."
-          npm install
+          echo "安装依赖..."
+          npm ci
+          echo "安装可选依赖（npm ci 不会安装可选依赖，这是 npm 的已知问题）..."
+          npm install --no-save --no-package-lock || npm install --no-save
 
       - name: Build package (required for docs)
         run: |
