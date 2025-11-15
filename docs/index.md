@@ -82,8 +82,8 @@ import { ApprovalDetailButton } from 'anker-dev-tool';
 
 ## 🤝 参与贡献
 
-我们欢迎所有形式的贡献，无论是新功能、bug 修复还是文档改进。请阅读我们的[贡献指南](https://github.com/anker/anker-dev-tool/blob/main/CONTRIBUTING.md)了解更多。
+我们欢迎所有形式的贡献，无论是新功能、bug 修复还是文档改进。请阅读我们的[贡献指南](https://github.com/ai520510xyf-del/cl-dev-tool/blob/main/CONTRIBUTING.md)了解更多。
 
 ## 📄 开源协议
 
-本项目基于 [MIT](https://github.com/anker/anker-dev-tool/blob/main/LICENSE) 协议开源。
+本项目基于 [MIT](https://github.com/ai520510xyf-del/cl-dev-tool/blob/main/LICENSE) 协议开源。

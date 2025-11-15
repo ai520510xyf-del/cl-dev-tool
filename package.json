@@ -1,5 +1,5 @@
 {
-  "name": "anker-dev-tool",
+  "name": "cl-dev-tool",
   "version": "0.1.4",
   "description": "基于 Ant Design 的 React 业务组件库，提供开箱即用的高质量业务组件，助力企业级应用快速开发",
   "main": "dist/index.cjs.js",
@@ -81,11 +81,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anker/anker-dev-tool.git"
+    "url": "https://github.com/ai520510xyf-del/cl-dev-tool.git"
   },
-  "homepage": "https://anker.github.io/anker-dev-tool",
+  "homepage": "https://ai520510xyf-del.github.io/cl-dev-tool",
   "bugs": {
-    "url": "https://github.com/anker/anker-dev-tool/issues"
+    "url": "https://github.com/ai520510xyf-del/cl-dev-tool/issues"
   },
   "peerDependencies": {
     "antd": ">=5.0.0",

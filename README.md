@@ -6,11 +6,11 @@
 
 [![NPM version](https://img.shields.io/npm/v/anker-dev-tool.svg?style=flat)](https://npmjs.org/package/anker-dev-tool)
 [![NPM downloads](https://img.shields.io/npm/dm/anker-dev-tool.svg?style=flat)](https://npmjs.org/package/anker-dev-tool)
-[![License](https://img.shields.io/npm/l/anker-dev-tool.svg?style=flat)](https://github.com/anker/anker-dev-tool/blob/main/LICENSE)
+[![License](https://img.shields.io/npm/l/anker-dev-tool.svg?style=flat)](https://github.com/ai520510xyf-del/cl-dev-tool/blob/main/LICENSE)
 
 [English](./README.md) | 简体中文
 
-[文档网站](https://anker.github.io/anker-dev-tool) · [更新日志](./CHANGELOG.md) · [报告问题](https://github.com/anker/anker-dev-tool/issues)
+[文档网站](https://ai520510xyf-del.github.io/cl-dev-tool) · [更新日志](./CHANGELOG.md) · [报告问题](https://github.com/ai520510xyf-del/cl-dev-tool/issues)
 
 </div>
 
@@ -110,7 +110,7 @@ const App = () => {
 - [组件文档](https://anker.github.io/anker-dev-tool/components/approval-detail-button)
 - [更新日志](./CHANGELOG.md)
 - [贡献指南](./CONTRIBUTING.md)
-- [问题反馈](https://github.com/anker/anker-dev-tool/issues)
+- [问题反馈](https://github.com/ai520510xyf-del/cl-dev-tool/issues)
 
 ## 🤝 参与贡献
 
@@ -118,7 +118,7 @@ const App = () => {
 
 ```bash
 # 克隆项目
-git clone https://github.com/anker/anker-dev-tool.git
+git clone https://github.com/ai520510xyf-del/cl-dev-tool.git
 cd anker-dev-tool
 
 # 安装依赖

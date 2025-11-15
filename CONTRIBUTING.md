@@ -22,7 +22,7 @@
 ### 克隆项目
 
 ```bash
-git clone https://github.com/anker/anker-dev-tool.git
+git clone https://github.com/ai520510xyf-del/cl-dev-tool.git
 cd anker-dev-tool
 ```
 
@@ -241,7 +241,7 @@ Bug 报告应包含：
 如果你在贡献过程中遇到问题，可以：
 
 - 查看[文档](https://anker.github.io/anker-dev-tool)
-- 在 [GitHub Discussions](https://github.com/anker/anker-dev-tool/discussions) 提问
+- 在 [GitHub Discussions](https://github.com/ai520510xyf-del/cl-dev-tool/discussions) 提问
 - 发送邮件到 anker@example.com
 
 再次感谢你的贡献！🎉

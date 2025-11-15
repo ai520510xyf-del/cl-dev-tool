@@ -245,11 +245,11 @@ import { ApprovalDetailButton } from 'anker-dev-tool';
 
 ### 如何贡献代码？
 
-请阅读[贡献指南](https://github.com/anker/anker-dev-tool/blob/main/CONTRIBUTING.md)。
+请阅读[贡献指南](https://github.com/ai520510xyf-del/cl-dev-tool/blob/main/CONTRIBUTING.md)。
 
 ### 如何报告 Bug？
 
-请在 [GitHub Issues](https://github.com/anker/anker-dev-tool/issues) 提交问题，并提供：
+请在 [GitHub Issues](https://github.com/ai520510xyf-del/cl-dev-tool/issues) 提交问题，并提供：
 
 1. 问题描述
 2. 复现步骤
@@ -259,7 +259,7 @@ import { ApprovalDetailButton } from 'anker-dev-tool';
 
 ### 如何请求新功能？
 
-在 [GitHub Issues](https://github.com/anker/anker-dev-tool/issues) 提交 Feature Request，详细描述：
+在 [GitHub Issues](https://github.com/ai520510xyf-del/cl-dev-tool/issues) 提交 Feature Request，详细描述：
 
 1. 功能需求
 2. 使用场景
@@ -268,9 +268,9 @@ import { ApprovalDetailButton } from 'anker-dev-tool';
 ### 在哪里可以获得帮助？
 
 - 查看[文档](/guide)
-- 搜索 [GitHub Issues](https://github.com/anker/anker-dev-tool/issues)
+- 搜索 [GitHub Issues](https://github.com/ai520510xyf-del/cl-dev-tool/issues)
 - 提交新的 Issue
 
 ---
 
-如果你的问题没有在这里列出，欢迎在 [GitHub Issues](https://github.com/anker/anker-dev-tool/issues) 提问。
+如果你的问题没有在这里列出，欢迎在 [GitHub Issues](https://github.com/ai520510xyf-del/cl-dev-tool/issues) 提问。

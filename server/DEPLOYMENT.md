@@ -55,7 +55,7 @@ docker push your-registry/anker-dev-tool-server:latest
 ```bash
 # 在服务器上
 cd /opt/anker-dev-tool-server
-git clone https://github.com/ai520510xyf-del/anker-dev-tool.git .
+git clone https://github.com/ai520510xyf-del/cl-dev-tool.git .
 cd server
 npm install
 npm run build
