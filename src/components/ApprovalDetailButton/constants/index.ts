@@ -27,8 +27,9 @@ export const TERMINAL_STATUSES: readonly string[] = [
 
 // 默认配置
 export const DEFAULT_CONFIG = {
-  // API_BASE_URL: 'http://10.0.200.5:3000/api',
-  API_BASE_URL: 'https://cl-dev-tool-server.onrender.com/api',
+  // API_BASE_URL: 'http://localhost:3000/api',
+  API_BASE_URL: 'http://10.0.200.5:3000/api',
+  // API_BASE_URL: 'https://cl-dev-tool-server.onrender.com/api',
   AUTO_REFRESH_INTERVAL: 30000, // 30 秒
   REQUEST_TIMEOUT: 10000, // 10 秒
   BUTTON_TEXT: '审批流程',

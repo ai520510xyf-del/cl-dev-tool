@@ -9,6 +9,7 @@ import type {
   TimelineData,
   ProcessedNode,
   CCNode,
+  ArrayTimelineItem,
 } from '../types/approval.types';
 import styles from './index.module.less';
 
@@ -61,12 +62,101 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // 规范化 timeline 数据：后端已返回对象格式
+  // 规范化 timeline 数据：兼容数组和对象两种格式
   const normalizedTimeline = useMemo<TimelineData>(() => {
     if (!data?.timeline) {
       return { completed: [], pending: [], cc: [] };
     }
 
+    // 如果是数组格式，需要转换为对象格式
+    if (Array.isArray(data.timeline)) {
+      const completed: ProcessedNode[] = [];
+      const pending: ProcessedNode[] = [];
+      const cc: CCNode[] = [];
+
+      data.timeline.forEach((item: ArrayTimelineItem) => {
+        const nodeName = item.name || item.nodeName || '未知节点';
+        const approverName =
+          item.user || item.approverName || item.approver || '未知';
+        const time = item.time || item.timestamp || '';
+
+        // 根据 type 和 status 字段分类
+        if (item.type === 'cc') {
+          // CC 类型
+          cc.push({
+            id: item.id,
+            ccNodeName: nodeName,
+            ccPersonName: approverName,
+            ccPersonDept: item.dept || item.approverDept,
+            ccTime: time,
+          });
+        } else if (item.status === 'approved' || item.status === 'rejected') {
+          // 已完成的状态
+          completed.push({
+            id: item.id,
+            nodeName: nodeName,
+            approverName: approverName,
+            approverDept: item.dept || item.approverDept,
+            time: time,
+            status: item.status === 'approved' ? 'approved' : 'rejected',
+            comment: item.comment,
+            nodeType: 'APPROVAL',
+          });
+        } else if (item.status === 'pending') {
+          // 待处理的状态
+          pending.push({
+            id: item.id,
+            nodeName: nodeName,
+            approverName: approverName,
+            approverDept: item.dept || item.approverDept,
+            time: time || 'PENDING',
+            status: 'pending',
+            comment: item.comment,
+            nodeType: 'APPROVAL',
+          });
+        } else if (item.type === 'submit' || item.status === 'completed') {
+          // submit 类型或已完成，放入 completed
+          completed.push({
+            id: item.id,
+            nodeName: nodeName,
+            approverName: approverName,
+            approverDept: item.dept || item.approverDept,
+            time: time,
+            status: 'approved',
+            comment: item.comment,
+            nodeType: 'APPROVAL',
+          });
+        } else if (item.type === 'approve' || item.type === 'final') {
+          // approve 或 final 类型，放入 pending
+          pending.push({
+            id: item.id,
+            nodeName: nodeName,
+            approverName: approverName,
+            approverDept: item.dept || item.approverDept,
+            time: time || 'PENDING',
+            status: 'pending',
+            comment: item.comment,
+            nodeType: 'APPROVAL',
+          });
+        } else {
+          // 默认情况，放入 completed
+          completed.push({
+            id: item.id,
+            nodeName: nodeName,
+            approverName: approverName,
+            approverDept: item.dept || item.approverDept,
+            time: time,
+            status: 'approved',
+            comment: item.comment,
+            nodeType: 'APPROVAL',
+          });
+        }
+      });
+
+      return { completed, pending, cc };
+    }
+
+    // 如果已经是对象格式，直接返回
     return {
       completed: data.timeline.completed || [],
       pending: data.timeline.pending || [],
