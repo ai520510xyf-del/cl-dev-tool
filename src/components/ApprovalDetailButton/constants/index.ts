@@ -25,8 +25,11 @@ export const TERMINAL_STATUSES: readonly string[] = [
   APPROVAL_STATUS.CANCELED,
 ];
 
-// 根据环境自动选择 API 地址
-const getApiBaseUrl = (): string => {
+/**
+ * 根据环境动态获取 API 地址
+ * 运行时动态判断，而不是构建时确定
+ */
+export const getApiBaseUrl = (): string => {
   // 如果设置了环境变量，优先使用
   if (typeof window !== 'undefined') {
     const win = window as Window & { __API_BASE_URL__?: string };
@@ -53,7 +56,6 @@ const getApiBaseUrl = (): string => {
 
 // 默认配置
 export const DEFAULT_CONFIG = {
-  API_BASE_URL: getApiBaseUrl(),
   AUTO_REFRESH_INTERVAL: 30000, // 30 秒
   REQUEST_TIMEOUT: 10000, // 10 秒
   BUTTON_TEXT: '审批流程',

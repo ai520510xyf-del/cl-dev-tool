@@ -4,7 +4,7 @@
  */
 
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { DEFAULT_CONFIG } from '../constants';
+import { DEFAULT_CONFIG, getApiBaseUrl } from '../constants';
 import type { ProcessedApprovalData } from '../types/approval.types';
 import type { ApiResponse } from '../types/api.types';
 
@@ -47,7 +47,9 @@ export async function fetchApprovalData(
     throw new Error('缺少必填参数：code、systemCode、systemKey');
   }
 
-  const apiClient = getApiClient(DEFAULT_CONFIG.API_BASE_URL);
+  // 动态获取 API 地址（运行时判断环境）
+  const apiBaseUrl = getApiBaseUrl();
+  const apiClient = getApiClient(apiBaseUrl);
 
   try {
     const response = await apiClient.get<ApiResponse<ProcessedApprovalData>>(
