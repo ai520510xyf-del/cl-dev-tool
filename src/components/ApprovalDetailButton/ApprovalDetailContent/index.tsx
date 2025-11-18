@@ -363,9 +363,7 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
       {/* 统一时间线 */}
       <div className={styles.container}>
         <div className={styles.unifiedTimeline}>
-          {allCompletedNodes.length === 0 &&
-          ccNodes.length === 0 &&
-          allPendingNodes.length === 0 ? (
+          {allCompletedNodes.length === 0 && allPendingNodes.length === 0 ? (
             <div className={styles.emptyState}>暂无审批节点数据</div>
           ) : (
             <>
