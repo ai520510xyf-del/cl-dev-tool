@@ -79,6 +79,7 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
         const approverName =
           item.user || item.approverName || item.approver || '未知';
         const time = item.time || item.timestamp || '';
+        const hasTime = Boolean(time); // 有 time 字段说明已完成
 
         // 根据 type 和 status 字段分类
         if (item.type === 'cc') {
@@ -91,7 +92,7 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
             ccTime: time,
           });
         } else if (item.status === 'approved' || item.status === 'rejected') {
-          // 已完成的状态
+          // 已完成的状态（优先判断 status）
           completed.push({
             id: item.id,
             nodeName: nodeName,
@@ -114,6 +115,18 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
             comment: item.comment,
             nodeType: 'APPROVAL',
           });
+        } else if (hasTime) {
+          // 有 time 字段说明已完成（数组格式通常只有 type，没有 status）
+          completed.push({
+            id: item.id,
+            nodeName: nodeName,
+            approverName: approverName,
+            approverDept: item.dept || item.approverDept,
+            time: time,
+            status: 'approved',
+            comment: item.comment,
+            nodeType: 'APPROVAL',
+          });
         } else if (item.type === 'submit' || item.status === 'completed') {
           // submit 类型或已完成，放入 completed
           completed.push({
@@ -126,8 +139,8 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
             comment: item.comment,
             nodeType: 'APPROVAL',
           });
-        } else if (item.type === 'approve' || item.type === 'final') {
-          // approve 或 final 类型，放入 pending
+        } else {
+          // 没有 time 字段，可能是待处理，放入 pending
           pending.push({
             id: item.id,
             nodeName: nodeName,
@@ -135,18 +148,6 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
             approverDept: item.dept || item.approverDept,
             time: time || 'PENDING',
             status: 'pending',
-            comment: item.comment,
-            nodeType: 'APPROVAL',
-          });
-        } else {
-          // 默认情况，放入 completed
-          completed.push({
-            id: item.id,
-            nodeName: nodeName,
-            approverName: approverName,
-            approverDept: item.dept || item.approverDept,
-            time: time,
-            status: 'approved',
             comment: item.comment,
             nodeType: 'APPROVAL',
           });
