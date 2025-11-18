@@ -25,11 +25,35 @@ export const TERMINAL_STATUSES: readonly string[] = [
   APPROVAL_STATUS.CANCELED,
 ];
 
+// 根据环境自动选择 API 地址
+const getApiBaseUrl = (): string => {
+  // 如果设置了环境变量，优先使用
+  if (typeof window !== 'undefined') {
+    const win = window as Window & { __API_BASE_URL__?: string };
+    if (win.__API_BASE_URL__) {
+      return win.__API_BASE_URL__;
+    }
+
+    const hostname = window.location.hostname;
+
+    // GitHub Pages 环境
+    if (hostname.includes('github.io')) {
+      return 'https://cl-dev-tool-server.onrender.com/api';
+    }
+
+    // 本地开发环境
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'http://localhost:3000/api';
+    }
+  }
+
+  // 默认使用线上地址
+  return 'https://cl-dev-tool-server.onrender.com/api';
+};
+
 // 默认配置
 export const DEFAULT_CONFIG = {
-  // API_BASE_URL: 'http://localhost:3000/api',
-  API_BASE_URL: 'http://10.0.200.5:3000/api',
-  // API_BASE_URL: 'https://cl-dev-tool-server.onrender.com/api',
+  API_BASE_URL: getApiBaseUrl(),
   AUTO_REFRESH_INTERVAL: 30000, // 30 秒
   REQUEST_TIMEOUT: 10000, // 10 秒
   BUTTON_TEXT: '审批流程',

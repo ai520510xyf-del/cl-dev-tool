@@ -13,8 +13,26 @@ import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 
 const app: Express = express();
 
+// CORS 配置：允许前端域名跨域访问
+const corsOptions = {
+  origin: [
+    'https://ai520510xyf-del.github.io',
+    'http://localhost:8000',
+    'http://localhost:5173',
+    /^https?:\/\/.*\.github\.io$/,
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'x-system-name',
+    'x-system-key',
+  ],
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
