@@ -58,6 +58,9 @@ export async function getApprovalInstance(
         } else if (response.data.code === 99991664) {
           // App not approved
           throw new Error('应用未获得审批权限');
+        } else if (response.data.code === 1390003) {
+          // Instance code not found - 参照Java版本的处理方式
+          throw new Error('审批流程不存在或无权限访问');
         } else {
           // Other errors - show more generic message
           throw new Error(
@@ -131,6 +134,9 @@ export async function getApprovalInstance(
               throw new Error('审批实例编码格式不正确');
             } else if (feishuCode === 99991664) {
               throw new Error('应用未获得审批权限');
+            } else if (feishuCode === 1390003) {
+              // Instance code not found - 参照Java版本的处理方式
+              throw new Error('审批流程不存在或无权限访问');
             } else {
               throw new Error(`获取审批数据失败: ${feishuMsg}`);
             }
