@@ -74,3 +74,22 @@ export interface ProcessedApprovalData {
   // timeline 可能是数组格式（API 返回）或对象格式（处理后）
   timeline: TimelineData | ArrayTimelineItem[];
 }
+
+/**
+ * 统一的时间线节点类型（用于渲染）
+ */
+export interface UnifiedTimelineNode {
+  id: string;
+  nodeName: string;
+  nodeType: 'completed' | 'pending' | 'cc';
+  approverName: string;
+  approverDept?: string;
+  time: string;
+  ccTime?: string;
+  status: 'approved' | 'rejected' | 'pending' | 'cc';
+  comment?: string;
+  isTimeClose?: boolean;
+  // CC 节点特有字段
+  ccNodeName?: string;
+  ccPersonName?: string;
+}

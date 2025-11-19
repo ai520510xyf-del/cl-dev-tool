@@ -2,14 +2,25 @@ import React, { useMemo, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useApprovalData } from '../hooks/useApprovalData';
 import { useAutoRefresh } from '../hooks/useAutoRefresh';
-import { isTerminalStatus } from '../utils';
+import { LABEL_TEXT } from '../constants';
+import {
+  isTerminalStatus,
+  getStatusBadgeClass,
+  getStatusText,
+  getNodeBadgeClass,
+  getNodeBadgeText,
+  formatDisplayTime,
+  normalizeTimelineNodes,
+} from '../utils';
 import Skeleton from '../common/Skeleton';
 import ErrorState from '../common/ErrorState';
+import CloseButton from '../common/CloseButton';
 import type {
   TimelineData,
   ProcessedNode,
   CCNode,
   ArrayTimelineItem,
+  UnifiedTimelineNode,
 } from '../types/approval.types';
 import styles from './index.module.less';
 
@@ -28,23 +39,6 @@ export interface ApprovalDetailContentProps {
   onError?: (error: Error) => void;
   /** 关闭回调 */
   onClose?: () => void;
-}
-
-// 统一的时间线节点类型（用于渲染）
-interface UnifiedTimelineNode {
-  id: string;
-  nodeName: string;
-  nodeType: 'completed' | 'pending' | 'cc';
-  approverName: string;
-  approverDept?: string;
-  time: string;
-  ccTime?: string;
-  status: 'approved' | 'rejected' | 'pending' | 'cc';
-  comment?: string;
-  isTimeClose?: boolean;
-  // CC 节点特有字段
-  ccNodeName?: string;
-  ccPersonName?: string;
 }
 
 const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
@@ -199,81 +193,19 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
     }
   }, [error, onError]);
 
-  // 获取状态徽章类名 - 参照Java版本，支持多种状态格式
-  const getStatusBadgeClass = (status: string) => {
-    const upperStatus = status.toUpperCase();
-    if (
-      upperStatus === 'APPROVED' ||
-      status === '已完成' ||
-      status === '已通过'
-    ) {
-      return styles.approved;
-    }
-    if (upperStatus === 'REJECTED' || status === '已拒绝') {
-      return styles.rejected;
-    }
-    if (upperStatus === 'CANCELED' || status === '已撤销') {
-      return styles.canceled || styles.pending;
-    }
-    // PENDING, 审批中, 进行中
-    return styles.pending;
-  };
-
-  // 获取状态文本 - 参照Java版本，支持中文状态
-  const getStatusText = (status: string) => {
-    const upperStatus = status.toUpperCase();
-    if (
-      upperStatus === 'APPROVED' ||
-      status === '已完成' ||
-      status === '已通过'
-    ) {
-      return '✓ 审批通过';
-    }
-    if (upperStatus === 'REJECTED' || status === '已拒绝') {
-      return '✗ 审批拒绝';
-    }
-    if (upperStatus === 'CANCELED' || status === '已撤销') {
-      return '⊘ 已撤销';
-    }
-    // PENDING, 审批中, 进行中
-    return '⏳ 审批进行中';
-  };
-
-  // 获取节点徽章类名
-  const getNodeBadgeClass = (status: string, nodeType: string) => {
-    if (nodeType === 'cc') return `${styles.nodeBadge} ${styles.cc}`;
-    if (status === 'approved') return `${styles.nodeBadge} ${styles.approved}`;
-    if (status === 'rejected') return `${styles.nodeBadge} ${styles.rejected}`;
-    return `${styles.nodeBadge} ${styles.pending}`;
-  };
-
-  // 获取节点徽章文本
-  const getNodeBadgeText = (status: string, nodeType: string) => {
-    if (nodeType === 'cc') return '📧 已抄送';
-    if (status === 'approved') return '✓ 已通过';
-    if (status === 'rejected') return '✗ 已拒绝';
-    return '⏳ 待处理';
-  };
-
   // 渲染时间线节点
   const renderTimelineNode = (
     node: UnifiedTimelineNode,
     type: 'completed' | 'pending' | 'cc'
   ) => {
-    const displayTime = (() => {
-      const time = node.time || node.ccTime;
-      if (time === 'PENDING') {
-        return '待处理';
-      }
-      return time || (type === 'pending' ? '等待中...' : '');
-    })();
-
+    const displayTime = formatDisplayTime(node.time || node.ccTime, type);
     const displayNodeName =
       type === 'cc'
         ? node.ccNodeName || node.nodeName || '抄送'
         : node.nodeName || '未知节点';
-
     const displayPersonName = node.approverName || node.ccPersonName || '未知';
+    const badgeClass = getNodeBadgeClass(node.status, type);
+    const badgeText = getNodeBadgeText(node.status, type);
 
     return (
       <div key={`${type}-${node.id}`} className={styles.timelineNode}>
@@ -282,8 +214,8 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
           <div className={styles.nodeHeader}>
             <div className={styles.nodeTitle}>
               <span>{displayNodeName}</span>
-              <span className={getNodeBadgeClass(node.status, type)}>
-                {getNodeBadgeText(node.status, type)}
+              <span className={`${styles.nodeBadge} ${styles[badgeClass]}`}>
+                {badgeText}
               </span>
               {node.isTimeClose && (
                 <span className={styles.timeCloseHint}>⚡ 几乎同时</span>
@@ -294,7 +226,7 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
           <div className={styles.nodeInfo}>
             <div className={styles.nodeInfoRow}>
               <span className={styles.nodeInfoLabel}>
-                {type === 'cc' ? '抄送人:' : '审批人:'}
+                {type === 'cc' ? LABEL_TEXT.CC : LABEL_TEXT.APPROVER}
               </span>
               <span>
                 {displayPersonName}
@@ -320,15 +252,7 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
   if (loading) {
     return (
       <div className={styles.wrapper}>
-        {onClose && (
-          <button
-            className={styles.closeBtn}
-            onClick={onClose}
-            aria-label="关闭"
-          >
-            ✕
-          </button>
-        )}
+        {onClose && <CloseButton onClick={onClose} />}
         <div className={styles.loadingContainer}>
           <Skeleton />
         </div>
@@ -339,15 +263,7 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
   if (error) {
     return (
       <div className={styles.wrapper}>
-        {onClose && (
-          <button
-            className={styles.closeBtn}
-            onClick={onClose}
-            aria-label="关闭"
-          >
-            ✕
-          </button>
-        )}
+        {onClose && <CloseButton onClick={onClose} />}
         <div className={styles.errorContainer}>
           <ErrorState message={error.message} onRetry={refetch} />
         </div>
@@ -357,68 +273,16 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
 
   if (!data) return null;
 
-  const completedNodes = normalizedTimeline.completed || [];
-  const ccNodes = normalizedTimeline.cc || [];
-  const pendingNodes = normalizedTimeline.pending || [];
+  // 使用工具函数规范化时间线节点
+  const { completed: allCompletedNodes, pending: allPendingNodes } =
+    normalizeTimelineNodes(normalizedTimeline);
 
-  // 合并已完成节点和抄送节点，并按时间排序
-  const allCompletedNodes: UnifiedTimelineNode[] = [
-    ...completedNodes.map((node: ProcessedNode) => ({
-      id: node.id,
-      nodeName: node.nodeName,
-      nodeType: 'completed' as const,
-      approverName: node.approverName,
-      approverDept: node.approverDept,
-      time: node.time,
-      status: node.status,
-      comment: node.comment,
-      isTimeClose: node.isTimeClose,
-    })),
-    ...ccNodes.map((node: CCNode) => ({
-      id: node.id,
-      nodeName: node.ccNodeName || '抄送',
-      nodeType: 'cc' as const,
-      approverName: node.ccPersonName,
-      approverDept: node.ccPersonDept,
-      time: '',
-      ccTime: node.ccTime || '',
-      status: 'cc' as const,
-      comment: undefined,
-      isTimeClose: false,
-      ccNodeName: node.ccNodeName,
-      ccPersonName: node.ccPersonName,
-    })),
-  ];
-
-  // 按时间排序（最早的在前面）
-  allCompletedNodes.sort((a, b) => {
-    const timeA = new Date(a.time || a.ccTime || '').getTime();
-    const timeB = new Date(b.time || b.ccTime || '').getTime();
-    return timeA - timeB;
-  });
-
-  // 待审批节点
-  const allPendingNodes: UnifiedTimelineNode[] = pendingNodes.map(
-    (node: ProcessedNode) => ({
-      id: node.id,
-      nodeName: node.nodeName,
-      nodeType: 'pending' as const,
-      approverName: node.approverName,
-      approverDept: node.approverDept,
-      time: node.time,
-      status: node.status,
-      comment: node.comment,
-      isTimeClose: node.isTimeClose,
-    })
-  );
+  const statusBadgeClass = getStatusBadgeClass(data.header.status);
+  const statusText = getStatusText(data.header.status);
 
   return (
     <div className={styles.wrapper}>
-      {onClose && (
-        <button className={styles.closeBtn} onClick={onClose} aria-label="关闭">
-          ✕
-        </button>
-      )}
+      {onClose && <CloseButton onClick={onClose} />}
       <div className={styles.header}>
         <div className={styles.headerTop}>
           <h1 className={styles.title}>{pageTitle}</h1>
@@ -455,9 +319,9 @@ const ApprovalDetailContent: React.FC<ApprovalDetailContentProps> = ({
           <div className={styles.headerInfoItem}>
             <span className={styles.headerInfoLabel}>状态:</span>
             <span
-              className={`${styles.headerStatusBadge} ${getStatusBadgeClass(data.header.status)}`}
+              className={`${styles.headerStatusBadge} ${styles[statusBadgeClass]}`}
             >
-              {getStatusText(data.header.status)}
+              {statusText}
             </span>
           </div>
         </div>

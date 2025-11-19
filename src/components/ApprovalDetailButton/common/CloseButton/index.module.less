@@ -1,0 +1,15 @@
+@import '@/components/ApprovalDetailButton/styles/variables.less';
+@import '@/components/ApprovalDetailButton/styles/mixins.less';
+
+.closeBtn {
+  position: absolute;
+  top: @spacing-lg;
+  right: @spacing-lg;
+  .button-base();
+  font-size: @font-size-lg;
+  z-index: 10;
+}
+
+.closeBtn:hover {
+  .button-hover();
+}

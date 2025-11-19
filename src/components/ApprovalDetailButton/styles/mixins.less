@@ -1,0 +1,56 @@
+// Less Mixins - 可复用的样式模式
+
+// 按钮基础样式
+.button-base() {
+  width: @size-icon-button;
+  height: @size-icon-button;
+  border: none;
+  background: @color-bg-base;
+  color: @color-text-tertiary;
+  border-radius: @border-radius-sm;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all @animation-duration;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.button-hover() {
+  background: @color-border-base;
+  color: @color-text-primary;
+}
+
+// 状态徽章样式
+.status-badge(@bg-color, @text-color, @border-color) {
+  background: @bg-color;
+  color: @text-color;
+  border: 1px solid @border-color;
+}
+
+// 节点圆点样式
+.node-dot(@bg-color) {
+  background: @bg-color;
+  box-shadow: 0 0 0 2px @bg-color;
+}
+
+// 节点内容卡片样式
+.node-content(@border-color, @bg-color: @color-bg-light) {
+  background: @bg-color;
+  border-left: 3px solid @border-color;
+}
+
+// 文本样式
+.text-primary() {
+  color: @color-text-primary;
+}
+
+.text-secondary() {
+  color: @color-text-secondary;
+}
+
+.text-tertiary() {
+  color: @color-text-tertiary;
+}

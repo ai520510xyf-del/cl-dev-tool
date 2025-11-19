@@ -1,28 +1,9 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import type {
-  TimelineData,
-  ProcessedNode,
-  CCNode,
-} from '../../types/approval.types';
+import type { TimelineData } from '../../types/approval.types';
+import { normalizeTimelineNodes } from '../../utils';
 import TimelineItem from '../TimelineItem';
 import styles from './index.module.less';
-
-/**
- * 统一的时间线节点类型
- */
-interface UnifiedTimelineNode {
-  id: string;
-  nodeName: string;
-  nodeType: 'completed' | 'pending' | 'cc';
-  approverName: string;
-  approverDept?: string;
-  time: string;
-  ccTime?: string; // CC 节点的时间字段
-  status: 'approved' | 'rejected' | 'pending' | 'cc';
-  comment?: string;
-  isTimeClose?: boolean;
-}
 
 /**
  * ApprovalTimeline 组件
@@ -34,55 +15,9 @@ export interface ApprovalTimelineProps {
 }
 
 const ApprovalTimeline: React.FC<ApprovalTimelineProps> = ({ timeline }) => {
-  // 合并并排序所有节点
+  // 使用工具函数规范化时间线节点
   const unifiedNodes = useMemo(() => {
-    const completedNodes = timeline.completed || [];
-    const ccNodes = timeline.cc || [];
-    const pendingNodes = timeline.pending || [];
-
-    // 合并已完成节点和抄送节点（完全对齐参考项目的实现）
-    const allCompletedNodes: UnifiedTimelineNode[] = [
-      ...completedNodes.map((node: ProcessedNode) => ({
-        ...node,
-        nodeType: 'completed' as const,
-      })),
-      ...ccNodes.map((node: CCNode) => ({
-        id: node.id,
-        nodeName: node.ccNodeName || '抄送',
-        nodeType: 'cc' as const,
-        approverName: node.ccPersonName,
-        approverDept: node.ccPersonDept,
-        time: '',
-        ccTime: node.ccTime || '',
-        status: 'cc' as const,
-        comment: undefined,
-        isTimeClose: false,
-      })),
-    ];
-
-    // 按时间排序（最早的在前面）- 对齐参考项目的排序逻辑
-    allCompletedNodes.sort((a, b) => {
-      const timeA = new Date(a.time || a.ccTime || '').getTime();
-      const timeB = new Date(b.time || b.ccTime || '').getTime();
-      return timeA - timeB;
-    });
-
-    // 合并待审批节点
-    const allPendingNodes: UnifiedTimelineNode[] = pendingNodes.map(
-      (node: ProcessedNode) => ({
-        id: node.id,
-        nodeName: node.nodeName,
-        nodeType: 'pending' as const,
-        approverName: node.approverName,
-        approverDept: node.approverDept,
-        time: node.time,
-        status: node.status,
-        comment: node.comment,
-        isTimeClose: node.isTimeClose,
-      })
-    );
-
-    return { completed: allCompletedNodes, pending: allPendingNodes };
+    return normalizeTimelineNodes(timeline);
   }, [timeline]);
 
   // 如果所有节点都为空，显示空状态

@@ -1,6 +1,8 @@
-// CSS Modules - 组件样式隔离，禁止全局样式污染
+@import '@/components/ApprovalDetailButton/styles/variables.less';
+@import '@/components/ApprovalDetailButton/styles/mixins.less';
+
 .container {
-  padding: var(--spacing-card);
+  padding: @spacing-xxl;
 }
 
 .unifiedTimeline {
@@ -8,22 +10,21 @@
   padding-left: 40px;
 }
 
-// 时间线垂直连接线
 .unifiedTimeline::before {
   content: '';
   position: absolute;
-  left: 12px;
+  left: @spacing-md;
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #e8e8e8;
+  background: @color-border-base;
 }
 
 .emptyState {
-  padding: 40px 20px;
+  padding: 40px @spacing-xl;
   text-align: center;
-  color: #8c8c8c;
-  font-size: 14px;
+  .text-tertiary();
+  font-size: @font-size-base;
 }
 
 .divider {
@@ -32,14 +33,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 16px 0;
+  margin: @spacing-lg 0;
 }
 
 .dividerText {
-  background: white;
-  padding: 0 16px;
-  font-size: 13px;
-  color: #8c8c8c;
+  background: @color-bg-white;
+  padding: 0 @spacing-lg;
+  font-size: @font-size-sm;
+  .text-tertiary();
   z-index: 1;
   position: relative;
 }
@@ -50,22 +51,27 @@
   left: -34px;
   right: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, #e8e8e8 40px, #e8e8e8);
+  background: linear-gradient(
+    to right,
+    transparent,
+    @color-border-base 40px,
+    @color-border-base
+  );
   z-index: 0;
 }
 
 .footerNote {
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid #e8e8e8;
-  font-size: 12px;
-  color: #8c8c8c;
+  margin-top: @spacing-xxl;
+  padding-top: @spacing-lg;
+  border-top: 1px solid @color-border-base;
+  font-size: @font-size-xs;
+  .text-tertiary();
   line-height: 1.8;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 16px;
+    padding: @spacing-lg;
   }
 
   .unifiedTimeline {
@@ -73,6 +79,6 @@
   }
 
   .unifiedTimeline::before {
-    left: 8px;
+    left: @spacing-sm;
   }
 }

@@ -15,10 +15,28 @@ export interface ApprovalHeaderProps {
 }
 
 const ApprovalHeader: React.FC<ApprovalHeaderProps> = ({ header }) => {
-  const displayStatus = useMemo(
-    () => toDisplayStatus(header.status),
-    [header.status]
-  );
+  const displayStatus = useMemo(() => {
+    // 处理中文状态
+    const statusMap: Record<string, 'approved' | 'rejected' | 'pending'> = {
+      已通过: 'approved',
+      已拒绝: 'rejected',
+      已撤销: 'pending',
+      进行中: 'pending',
+    };
+
+    if (statusMap[header.status]) {
+      return statusMap[header.status];
+    }
+
+    return toDisplayStatus(
+      header.status as
+        | 'PENDING'
+        | 'APPROVED'
+        | 'REJECTED'
+        | 'CANCELED'
+        | 'DELETED'
+    );
+  }, [header.status]);
 
   return (
     <div className={styles.container}>

@@ -1,7 +1,9 @@
-// CSS Modules - 组件样式隔离，禁止全局样式污染
+@import '@/components/ApprovalDetailButton/styles/variables.less';
+@import '@/components/ApprovalDetailButton/styles/mixins.less';
+
 .timelineNode {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: @spacing-xl;
 }
 
 .timelineNode:last-child,
@@ -9,152 +11,136 @@
   margin-bottom: 0;
 }
 
-// 节点指示器圆点
 .nodeDot {
   position: absolute;
   left: -34px;
   top: 6px;
-  width: 16px;
-  height: 16px;
+  width: @size-node-dot;
+  height: @size-node-dot;
   border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 2px #d9d9d9;
-  background: #fff;
+  border: 2px solid @color-bg-white;
+  box-shadow: 0 0 0 2px @color-border-light;
+  background: @color-bg-white;
   z-index: 2;
 }
 
-// 不同状态的圆点颜色
 .nodeDot.completed {
-  background: #52c41a;
-  box-shadow: 0 0 0 2px #52c41a;
+  .node-dot(@color-success);
 }
 
 .nodeDot.pending {
-  background: #1890ff;
-  box-shadow: 0 0 0 2px #1890ff;
-  animation: pulse 2s ease-in-out infinite;
+  .node-dot(@color-info);
+  animation: pulse @animation-pulse-duration ease-in-out infinite;
 }
 
 .nodeDot.cc {
-  background: #faad14;
-  box-shadow: 0 0 0 2px #faad14;
+  .node-dot(@color-warning);
 }
 
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 2px #1890ff;
+    box-shadow: 0 0 0 2px @color-info;
   }
   50% {
     box-shadow: 0 0 0 6px rgba(24, 144, 255, 0.2);
   }
 }
 
-// 节点内容卡片
 .nodeContent {
-  background: #fafafa;
-  border: 1px solid #e8e8e8;
-  border-radius: 8px;
-  padding: 18px 20px;
+  background: @color-bg-light;
+  border: 1px solid @color-border-base;
+  border-radius: @border-radius-lg;
+  padding: 18px @spacing-xl;
 }
 
 .nodeContent.completed {
-  border-left: 3px solid #52c41a;
+  .node-content(@color-success);
 }
 
 .nodeContent.pending {
-  border-left: 3px solid #1890ff;
-  background: #e6f7ff;
+  .node-content(@color-info, @color-info-bg);
 }
 
 .nodeContent.cc {
-  border-left: 3px solid #faad14;
-  background: #fffbe6;
+  .node-content(@color-warning, @color-warning-bg);
 }
 
 .nodeHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: @spacing-md;
 }
 
 .nodeTitle {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 15px;
+  gap: @spacing-sm;
+  font-size: @font-size-md;
   font-weight: 500;
-  color: #262626;
+  .text-primary();
   flex-wrap: wrap;
   flex: 1;
 }
 
 .nodeBadge {
   display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+  padding: 2px @spacing-sm;
+  border-radius: @border-radius-sm;
+  font-size: @font-size-xs;
   font-weight: normal;
 }
 
 .nodeBadge.approved {
-  background: #f6ffed;
-  color: #52c41a;
-  border: 1px solid #b7eb8f;
+  .status-badge(@color-success-bg, @color-success, @color-success-border);
 }
 
 .nodeBadge.pending {
-  background: #e6f7ff;
-  color: #1890ff;
-  border: 1px solid #91d5ff;
+  .status-badge(@color-info-bg, @color-info, @color-info-border);
 }
 
 .nodeBadge.rejected {
-  background: #fff1f0;
-  color: #ff4d4f;
-  border: 1px solid #ffccc7;
+  .status-badge(@color-error-bg, @color-error, @color-error-border);
 }
 
 .nodeBadge.cc {
-  background: #fffbe6;
-  color: #faad14;
-  border: 1px solid #ffe58f;
+  .status-badge(@color-warning-bg, @color-warning, @color-warning-border);
 }
 
 .nodeTime {
-  font-size: 13px;
-  color: #8c8c8c;
+  font-size: @font-size-sm;
+  .text-tertiary();
   white-space: nowrap;
-  margin-left: 12px;
+  margin-left: @spacing-md;
 }
 
 .nodeInfo {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-size: 14px;
-  color: #595959;
+  font-size: @font-size-base;
+  .text-secondary();
 }
 
 .nodeInfoRow {
   display: flex;
-  gap: 8px;
+  gap: @spacing-sm;
 }
 
 .nodeInfoLabel {
-  color: #8c8c8c;
+  .text-tertiary();
   min-width: 60px;
 }
 
 .nodeComment {
-  margin-top: 12px;
+  margin-top: @spacing-md;
   padding: 10px 14px;
-  background: #fff;
-  border-radius: 6px;
-  border: 1px solid #d9d9d9;
-  font-size: 13px;
-  color: #595959;
+  background: @color-bg-white;
+  border-radius: @border-radius-md;
+  border: 1px solid @color-border-light;
+  font-size: @font-size-sm;
+  .text-secondary();
   line-height: 1.5;
   word-break: break-word;
 }
@@ -166,14 +152,14 @@
 .timeCloseHint {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
+  gap: @spacing-xs;
+  padding: 2px @spacing-sm;
   background: #fff7e6;
   border: 1px solid #ffd591;
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: @border-radius-sm;
+  font-size: @font-size-xs;
   color: #fa8c16;
-  margin-left: 8px;
+  margin-left: @spacing-sm;
 }
 
 @media (max-width: 768px) {

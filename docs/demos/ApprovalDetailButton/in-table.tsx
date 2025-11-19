@@ -76,7 +76,7 @@ const InTableDemo = () => {
       applicant: '张三',
       status: 'pending',
       createTime: '2024-11-13 10:30:00',
-      code: '447F8A25-3C7F-4B18-8F44-7242680D9477',
+      code: 'E1B6E4B4-390D-461D-9675-6B1D307EBB5F',
     },
     {
       key: '2',
@@ -84,7 +84,7 @@ const InTableDemo = () => {
       applicant: '李四',
       status: 'approved',
       createTime: '2024-11-12 14:20:00',
-      code: '447F8A25-3C7F-4B18-8F44-7242680D9478',
+      code: 'E1B6E4B4-390D-461D-9675-6B1D307EBB5F',
     },
     {
       key: '3',
@@ -92,7 +92,7 @@ const InTableDemo = () => {
       applicant: '王五',
       status: 'rejected',
       createTime: '2024-11-11 09:15:00',
-      code: '447F8A25-3C7F-4B18-8F44-7242680D9479',
+      code: 'E1B6E4B4-390D-461D-9675-6B1D307EBB5F',
     },
   ];
 

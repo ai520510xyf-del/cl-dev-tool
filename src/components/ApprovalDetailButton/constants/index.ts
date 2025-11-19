@@ -47,13 +47,19 @@ export const getApiBaseUrl = (): string => {
     // 本地开发环境
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
       // return 'http://10.0.200.5:3000/api';
-      return 'http://localhost:8080/api';
+      return 'http://localhost:3000/api';
     }
   }
 
   // 默认使用线上地址
   return 'https://cl-dev-tool-server.onrender.com/api';
 };
+
+// 标签文本常量
+export const LABEL_TEXT = {
+  CC: '抄送人:',
+  APPROVER: '审批人:',
+} as const;
 
 // 默认配置
 export const DEFAULT_CONFIG = {

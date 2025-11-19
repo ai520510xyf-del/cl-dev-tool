@@ -81,6 +81,11 @@ export default defineConfig({
   },
   lessLoader: {
     javascriptEnabled: true,
+    modifyVars: {},
+    additionalData: '',
+    lessOptions: {
+      paths: [path.resolve(__dirname, 'src')],
+    },
   },
   mfsu: false,
   // srcTranspiler: 'babel', // 注释掉，使用默认的 swc
