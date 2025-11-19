@@ -77,15 +77,11 @@ export class TimelineProcessorService {
         userInfoMap
       );
 
-      // Find the START node to get applicant info
-      const startNode = rawData.timeline?.find(node => node.type === 'START');
-      // Use open_id for mapping (preferred over user_id since Contact API uses open_id)
-      const applicantId =
-        startNode?.open_id ||
-        startNode?.user_id ||
-        rawData.open_id ||
-        rawData.user_id ||
-        'Unknown';
+      // 参照Java版本：直接从rawData获取申请人信息（user_id和open_id）
+      const applicantUserId = rawData.user_id || null;
+      const applicantOpenId = rawData.open_id || null;
+      // 优先使用openId，如果没有则使用userId
+      const applicantId = applicantOpenId || applicantUserId || 'Unknown';
       const applicant = this.getUserName(applicantId, userInfoMap);
 
       return {
@@ -108,6 +104,7 @@ export class TimelineProcessorService {
 
   /**
    * Get user name from map or fall back to user_id
+   * 参照Java版本：如果获取失败，fallback到userId，如果userId也为null，返回"未知用户"
    */
   private getUserName(
     userId: string,
@@ -115,6 +112,10 @@ export class TimelineProcessorService {
   ): string {
     if (userInfoMap && userInfoMap.has(userId)) {
       return userInfoMap.get(userId)!;
+    }
+    // 参照Java版本：fallback到userId，如果userId也为null或'Unknown'，返回"未知用户"
+    if (!userId || userId === 'Unknown') {
+      return '未知用户';
     }
     return userId;
   }
@@ -172,7 +173,8 @@ export class TimelineProcessorService {
           eventType === 'REMOVE_REPEAT' ||
           eventType === 'REJECT'
         ) {
-          const createTime = event.create_time;
+          // 参照Java版本：使用has检查字段是否存在，如果不存在则为null
+          const createTime = event.create_time || null;
           const userId = event.user_id || null;
           const openId = event.open_id || null;
           const taskId = event.task_id || null;
@@ -187,10 +189,11 @@ export class TimelineProcessorService {
           const approverId = openId || userId || 'Unknown';
           const approverName = this.getUserName(approverId, userInfoMap);
 
-          const time = this.formatTimestamp(createTime || '');
+          // 参照Java版本：TimeUtils.formatTimestamp(createTime) - 如果createTime为null，返回空字符串
+          const time = createTime ? this.formatTimestamp(createTime) : '';
           const status = eventType === 'REJECT' ? 'rejected' : 'approved';
 
-          // 提取评论信息
+          // 提取评论信息 - 参照Java版本：如果event没有comment字段，返回null（转换为undefined以匹配类型）
           const comment = event.comment || undefined;
 
           const node: ProcessedNode = {
@@ -208,7 +211,8 @@ export class TimelineProcessorService {
         }
         // 处理抄送事件
         else if (eventType === 'CC') {
-          const createTime = event.create_time;
+          // 参照Java版本：event.get("create_time").asText()
+          const createTime = event.create_time || null;
 
           // 处理cc_user_list数组
           if (event.cc_user_list && Array.isArray(event.cc_user_list)) {
@@ -218,7 +222,8 @@ export class TimelineProcessorService {
 
               const ccPersonId = ccOpenId || ccUserId || 'Unknown';
               const ccPersonName = this.getUserName(ccPersonId, userInfoMap);
-              const ccTime = this.formatTimestamp(createTime || '');
+              // 参照Java版本：TimeUtils.formatTimestamp(createTime) - 如果createTime为null，返回空字符串
+              const ccTime = createTime ? this.formatTimestamp(createTime) : '';
 
               const ccNode: CCNode = {
                 id: 'cc' + ccId++,
@@ -248,7 +253,8 @@ export class TimelineProcessorService {
 
           const approverId = openId || userId || 'Unknown';
           const approverName = this.getUserName(approverId, userInfoMap);
-          const time = startTime ? this.formatTimestamp(startTime) : 'PENDING';
+          // 参照Java版本：TimeUtils.formatTimestamp(startTime) - 如果startTime为null，返回空字符串
+          const time = startTime ? this.formatTimestamp(startTime) : '';
 
           const node: ProcessedNode = {
             id: String(approvalId++),
@@ -362,7 +368,7 @@ export class TimelineProcessorService {
   }
 
   /**
-   * Format timestamp to readable date string
+   * Format timestamp to readable date string - 参照Java版本的逻辑
    */
   private formatTimestamp(timestamp: string): string {
     // Handle special case for pending nodes
@@ -370,32 +376,40 @@ export class TimelineProcessorService {
       return 'PENDING';
     }
 
-    let date: Date;
-
-    // Handle different timestamp formats
-    if (timestamp.includes('T') && timestamp.includes('Z')) {
-      // ISO format like "2025-11-16T03:54:31.311Z"
-      date = new Date(timestamp);
-    } else {
-      // Feishu timestamps are in milliseconds (numeric string)
-      date = new Date(parseInt(timestamp));
+    // 参照Java版本：如果timestamp为null或空，返回空字符串
+    if (!timestamp || timestamp.trim() === '') {
+      return '';
     }
 
-    // Validate the date
-    if (isNaN(date.getTime())) {
-      // If timestamp is invalid, use current time
-      date = new Date();
+    try {
+      // 参照Java版本：Feishu timestamps是毫秒时间戳（数字字符串）
+      const timestampNum = parseInt(timestamp);
+      if (isNaN(timestampNum)) {
+        // 如果不是有效的时间戳，返回原字符串（参照Java版本的fallback逻辑）
+        return timestamp;
+      }
+
+      const date = new Date(timestampNum);
+
+      // Validate the date
+      if (isNaN(date.getTime())) {
+        // 如果日期无效，返回原字符串
+        return timestamp;
+      }
+
+      // Format as YYYY-MM-DD HH:mm:ss
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    } catch (error) {
+      // 如果解析失败，返回原字符串
+      return timestamp;
     }
-
-    // Format as YYYY-MM-DD HH:mm:ss
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 }
 
